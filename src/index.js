@@ -6,6 +6,13 @@
 $.fn.DatePicker = function(obj){
     var $b = $('body');
 
+    var defaults = {
+        title:'Set Date',
+        ensure: '就你了',
+        cancel: '再看吧'
+    }
+
+    $self = $(this);
 
     //mixin
     function mixin(sourceObj,targetObj) {
@@ -46,19 +53,17 @@ $.fn.DatePicker = function(obj){
     })
     $close.attr('class','close');
 
-    var defaults = {
-        title:'Set Date',
-        ensure: '就你了',
-        cancel: '再看吧'
-    }
-
-
     //标题
     var $title = $('<p>Set Date').css({
         textAlign:'center'
     })
 
     $title.addClass('title');
+
+
+
+
+
 
 
 
@@ -119,6 +124,7 @@ $.fn.DatePicker = function(obj){
 
     var $dayDiv = $yearDiv.clone()
     var $day = $dayDiv.find('div')
+    $day.addClass('day')
     $day.get(0).innerHTML = day
     $select.append($dayDiv)
 
@@ -128,6 +134,7 @@ $.fn.DatePicker = function(obj){
         margin:'0 5%'
     })
     var $month = $monthDiv.find('div')
+    $month.addClass('month')
     $month.get(0).innerHTML = month
     $select.append($monthDiv)
 
@@ -141,7 +148,7 @@ $.fn.DatePicker = function(obj){
         float:'left',
         marginTop:'10px',
         textAlign:'center'
-    })
+    }).addClass('ensure')
 
     var $cancel = $('<div>取消').css({
         width:'45%',
@@ -150,7 +157,7 @@ $.fn.DatePicker = function(obj){
         float:'right',
         marginTop:'10px',
         textAlign:'center'
-    })
+    }).addClass('cancel')
 
 
     $select.append($yearDiv)
@@ -178,15 +185,42 @@ $.fn.DatePicker = function(obj){
     }
 
     getTime();
+
+
     //绑定事件
     $('.selectWrapper').on('click','a',function(){
         var $self = $(this);
         var $containner = $self.siblings('div')
+        var $type = $containner.attr('className');
+        //console.log($type)
+        //console.log($containner.get(0).innerHTML)
         if($self.attr('className') == 'add'){
+            if($type.indexOf('month') !== -1 && $containner.get(0).innerHTML>11) return;
+            else if($type.indexOf('day') !== -1 && $containner.get(0).innerHTML>30) return;
             $containner.get(0).innerHTML++
             getTime();
         }else{
+            if($type.indexOf('month') !== -1 && $containner.get(0).innerHTML == 1) return;
+            else if($type.indexOf('day') !== -1 && $containner.get(0).innerHTML == 0) return;
             $containner.get(0).innerHTML--
+            getTime();
+        }
+    })
+
+    //判断日期非法性
+
+    var judge_arr = [1,3,5,7,8,10,12];
+    var sel_arr = $('.date').get(0).innerHTML.split('-');
+    $('.ensure').on('click',function(){
+        console.log(sel_arr[2]);
+        if(judge_arr.indexOf(sel_arr[1]) == -1 && sel_arr[2] == 31){
+            alert('木有这一天噢')
+        }else if(sel_arr[1] == 2 && sel_arr[2] > 28){
+            alert('木有这一天')
+        }else{
+            $self.val($('.date').get(0).innerHTML);
+            $wrapper.hide();
+            $datePicker.hide();
         }
     })
 
