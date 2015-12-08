@@ -34,7 +34,6 @@ $.fn.DatePicker = function(obj){
         background:'rgba(0,0,0,0.4)'
     })
 
-
     //日历选择器
     var $datePicker = $('<div/>').css({
         position:'absolute',
@@ -45,7 +44,6 @@ $.fn.DatePicker = function(obj){
         height:'40%',
         background:'white'
     })
-
 
     //关闭按钮
     var $close = $('<span>x').css({
@@ -60,13 +58,6 @@ $.fn.DatePicker = function(obj){
 
     $title.addClass('title');
 
-
-
-
-
-
-
-
     var date = new Date(),
         year = date.getFullYear(),
         month = date.getMonth()+1,
@@ -78,12 +69,8 @@ $.fn.DatePicker = function(obj){
     arr.push(day);
     var date = arr.join('-');
 
-
-
     //选择日期
-    var $date = $('<p>').css({
-    })
-
+    var $date = $('<p>')
     $date.get(0).innerHTML = arr.join('-');
     $date.attr('class','date');
 
@@ -94,14 +81,10 @@ $.fn.DatePicker = function(obj){
         margin:'0 auto'
     })
 
-
-    var $yearDiv = $('<div>').css({
-    })
+    var $yearDiv = $('<div>')
     $yearDiv.addClass('selectWrapper')
 
-    var $yearAdd = $('<a>+').css({
-
-    })
+    var $yearAdd = $('<a>+')
     $yearAdd.addClass('add')
     $yearDiv.append($yearAdd)
 
@@ -113,21 +96,15 @@ $.fn.DatePicker = function(obj){
     $year.addClass('container')
     $yearDiv.append($year)
 
-
-    var $yearSub = $('<a>-').css({
-
-    })
+    var $yearSub = $('<a>-')
     $yearSub.addClass('sub')
     $yearDiv.append($yearSub)
-
-
 
     var $dayDiv = $yearDiv.clone()
     var $day = $dayDiv.find('div')
     $day.addClass('day')
     $day.get(0).innerHTML = day
     $select.append($dayDiv)
-
 
     var $monthDiv = $yearDiv.clone()
     $monthDiv.css({
@@ -137,8 +114,6 @@ $.fn.DatePicker = function(obj){
     $month.addClass('month')
     $month.get(0).innerHTML = month
     $select.append($monthDiv)
-
-
 
     //确认取消按钮
     var $ensure = $('<div>确认').css({
@@ -159,7 +134,6 @@ $.fn.DatePicker = function(obj){
         textAlign:'center'
     }).addClass('cancel')
 
-
     $select.append($yearDiv)
     $select.append($ensure)
     $select.append($cancel)
@@ -172,10 +146,7 @@ $.fn.DatePicker = function(obj){
     $b.append($wrapper)
     $b.append($datePicker)
 
-
-
     //获取绑定的时间
-
     var getTime = function() {
         var arr = [];
         arr.push($year.get(0).innerHTML)
@@ -183,17 +154,13 @@ $.fn.DatePicker = function(obj){
         arr.push($day.get(0).innerHTML)
         $('.date').get(0).innerHTML = arr.join('-')
     }
-
     getTime();
-
 
     //绑定事件
     $('.selectWrapper').on('click','a',function(){
         var $self = $(this);
         var $containner = $self.siblings('div')
         var $type = $containner.attr('className');
-        //console.log($type)
-        //console.log($containner.get(0).innerHTML)
         if($self.attr('className') == 'add'){
             if($type.indexOf('month') !== -1 && $containner.get(0).innerHTML>11) return;
             else if($type.indexOf('day') !== -1 && $containner.get(0).innerHTML>30) return;
@@ -208,10 +175,10 @@ $.fn.DatePicker = function(obj){
     })
 
     //判断日期非法性
-
     var judge_arr = [1,3,5,7,8,10,12];
-    var sel_arr = $('.date').get(0).innerHTML.split('-');
+
     $('.ensure').on('click',function(){
+        var sel_arr = $('.date').get(0).innerHTML.split('-');
         console.log(sel_arr[2]);
         if(judge_arr.indexOf(sel_arr[1]) == -1 && sel_arr[2] == 31){
             alert('木有这一天噢')
