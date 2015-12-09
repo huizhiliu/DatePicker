@@ -6,7 +6,7 @@
 $.fn.DatePicker = function(obj){
     var $b = $('body');
 
-    var defaults = {
+    var config = {
         title:'Set Date',
         ensure: '就你了',
         cancel: '再看吧'
@@ -14,15 +14,23 @@ $.fn.DatePicker = function(obj){
 
     $self = $(this);
 
+
+
+
+
     //mixin
     function mixin(sourceObj,targetObj) {
         for(var key in sourceObj) {
-            if(sourceObj.hasOwnProperty(key) && !(key in targetObj)){
+            if(!(key in targetObj)){
                 targetObj[key] = sourceObj[key]
             }
         }
         return sourceObj
     }
+
+    //config
+    //var arg = mixin(config,obj);
+    //console.log(arg)
 
     //遮罩
     var $wrapper = $('<div/>').css({
@@ -174,6 +182,9 @@ $.fn.DatePicker = function(obj){
         }
     })
 
+    $wrapper.hide();
+    $datePicker.hide();
+
     //判断日期非法性
     var judge_arr = [1,3,5,7,8,10,12];
 
@@ -190,5 +201,16 @@ $.fn.DatePicker = function(obj){
             $datePicker.hide();
         }
     })
+
+    $('.close,.cancel').on('click',function(){
+        $wrapper.hide();
+        $datePicker.hide();
+    })
+
+    $(this).on('click',function(){
+        $wrapper.show();
+        $datePicker.show();
+    })
+
 
 }
