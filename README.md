@@ -1,5 +1,5 @@
 # DatePicker
- a jquery plugin for web &amp; mobile
+ a jquery plugin for web
  
 ###Usage
  HTML:
@@ -13,4 +13,4 @@
   
   
 ###Contact 
-    QQ:847858699
+     Mail:847858699@qq.com
